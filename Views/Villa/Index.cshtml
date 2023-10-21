@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Booking.Domain.Entity.Villa>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: left;
+    }
+</style>
+<head>
+    <link href="~/lib/datatables/datatables.bootstrap4.min.css" rel="stylesheet" />
+
+</head>
+
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Villa </h6>
+    </div>
+    <a href="@Url.Action("Create", "Villa")" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i> Create</a>                                |
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" >
+                <thead>
+                    <tr>
+                        <th>Villa Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Sqft</th>
+                        <th>Occupancy</th>
+                        <th>Created Date</th>
+                        <th>Update Date</th>
+
+                        <th>Actions</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var item in Model)
+                    {
+
+                    <tr>
+                        <td>@item.VillaName</td>
+                            <td> @item.Description </td>
+                            <td>@item.Price</td>
+                            <td>@item.Sqft</td>
+                            <td>@item.Occupancy</td>
+                            <td>@item.Created_Date</td>
+                            <td>@item.Updated_Date</td>
+
+                            <td>
+                                <a href="@Url.Action("Edit", "Villa", new { id = item.ID })" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i> Edit</a>                                |
+                                @* <a href="@Url.Action("Details", "Villa", new { id = item.ID })" class=" btn btn-warning mx-2"> <i class="bi bi-info-circle"></i> Details</a> | *@
+                                @* <a href="@Url.Action("Delete", "Villa", new { id = item.ID })" class="btn btn-danger" id="delete" data-toggle="modal" data-target="#confirmDeleteModal">Delete</a> *@
+
+                                 <a href="@Url.Action("Delete", "Villa", new { id = item.ID })" class="btn btn-danger mx-2"> <i class="bi bi-trash3"></i> Delete</a> 
+                            </td>
+                    </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script src="~/lib/datatables/jquery.datatables.min.js"></script>
+
+    <script src="~/lib/datatables/datatables.bootstrap4.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable();
+        });
+    </script>
+}

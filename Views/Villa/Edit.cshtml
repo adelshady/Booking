@@ -1,0 +1,113 @@
+﻿@using Booking.Domain.Entity;
+@using Booking.web.Setting;
+@using Microsoft.AspNetCore.Http
+@model Villa
+
+@{
+    ViewData["Title"] = "Edit";
+    // var webHostEnvironment = ViewContext.HttpContext.RequestServices.GetService<IWebHostEnvironment>();
+    // var imageBasePath = $"{webHostEnvironment.WebRootPath}{FileSetting.ImagesPath}";
+}
+
+
+<h1>Edit</h1>
+
+
+<div class="w-100 card border-0 p-4">
+    <div class="card-header bg-success bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Update Villa</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body border p-4">
+        <form method="post" class="row" enctype="multipart/form-data">
+            <input asp-for="ID" hidden />
+            <div class="col-10">
+                <div class="p-3">
+                    @* <div asp-validation-summary="All"></div> *@
+                    <div class="form-floating py-1 col-12">
+                        <input asp-for="@Model.VillaName" class="form-control border shadow" />
+                        <label asp-for="@Model.VillaName" class="ms-2"></label>
+                        <span asp-validation-for="@Model.VillaName" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating py-1 col-12">
+                        <input asp-for="@Model.Description" class="form-control border shadow" />
+                        <label asp-for="@Model.Description" class="ms-2"></label>
+                        <span asp-validation-for="@Model.Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating py-1 col-12">
+                        <input asp-for="@Model.Price" class="form-control border shadow" />
+                        <label asp-for="@Model.Price" class="ms-2"></label>
+                        <span asp-validation-for="@Model.Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating py-1 col-12">
+                        <input asp-for="@Model.Sqft" class="form-control border shadow" />
+                        <label asp-for="@Model.Sqft" class="ms-2"></label>
+                        <span asp-validation-for="@Model.Sqft" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating py-1 col-12">
+                        <input asp-for="@Model.Occupancy" class="form-control border shadow" />
+                        <label asp-for="@Model.Occupancy" class="ms-2"></label>
+                        <span asp-validation-for="@Model.Occupancy" class="text-danger"></span>
+                    </div>
+                    @* <div class="form-floating py-1 col-12">
+                        <input asp-for="@Model.Image" class="form-control border shadow" />
+                        <input asp-for="@Model.ImageUrl" hidden class="form-control border shadow" />
+                        <label asp-for="@Model.ImageUrl" class="ms-2"></label>
+                        <span asp-validation-for="@Model.ImageUrl" class="text-danger"></span>
+                    </div> *@
+                    <input asp-for="@Model.Created_Date" hidden class="form-control border shadow" />
+                    <input asp-for="@Model.Updated_Date" hidden class="form-control border shadow" />
+
+                    <div class="form-group">
+                        <label asp-for="@Model.ImageUrl" class="form-label mt-4"></label>
+                        <input asp-for="@Model.ImageUrl" hidden class="form-control border shadow" />
+                     @*    <input asp-for="@Model.Image" class="form-control border shadow" /> *@
+
+                        <input type="file" class="form-control" asp-for="@Model.Image"
+                               data-rule-extension="@FileSetting.AllowedExtensions.Replace(".", string.Empty)"
+                               data-msg-extension="Not allowed extension"
+                               data-rule-filesize="@FileSetting.MaxFileSizeInBytes"
+                               data-msg-filesize="Maximum allowed size is @FileSetting.MaxFileSizeInMB MB"> 
+                        <small class="form-text text-muted">Only @FileSetting.AllowedExtensions files are allowed with max size @(FileSetting.MaxFileSizeInMB)MB.</small>
+                        <span asp-validation-for="@Model.ImageUrl" class="text-danger d-block"></span>
+                    </div>
+
+                    <div class="row pt-2">
+                        <div class="col-6 col-md-3">
+                            <button type="submit" class="btn btn-success w-100">
+                                <i class="bi bi-check-circle"></i> Update
+                            </button>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <a asp-controller="Villa" asp-action="Index" class="btn btn-secondary w-100">
+                                <i class="bi bi-x-circle"></i> Cancel
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+                @if(Model.ImageUrl != null)
+                {
+
+                <img src="@($"/{FileSetting.ImagesPath}/{@Model.ImageUrl}")" width="100%"
+                     style="border-radius:5px; border:1px solid #bbb9b9" />
+
+                  @*   <img src="/images/ef8bb624-9830-488e-aea9-887e2dc5335d.jpg" width="100%"
+                         style="border-radius:5px; border:1px solid #bbb9b9" />
+ *@
+                }
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
